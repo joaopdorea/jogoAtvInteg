@@ -168,6 +168,7 @@ function App() {
   const [respostas, setRespostas] = useState([]);
   const [indexAtual, setIndexAtual] = useState(0);
   const [categoriasEscolhidas, setCategoriasEscolhidas] = useState([]);
+  const errosLista = [];
 
   // Função para sortear 12 categorias únicas
   const sortearCategorias = () => {
@@ -210,6 +211,27 @@ function App() {
     const arrayPrincipal = itens.filter((item) => item[categoria] == true)
     return arrayPrincipal[0] ?  arrayPrincipal[0].nome : null;
 
+
+
+    
+  }
+
+
+  const verificaErros = () => {
+
+
+    for (const resposta of respostas) {
+
+      
+      if(!itens.find((item) => item.nome === resposta["nome"])[resposta["categoria"]]){
+        const novoErro = { nome: resposta["nome"], categoria: resposta["categoria"][0]}
+        errosLista.push(novoErro);
+      }
+    }
+
+
+      return errosLista.length;
+
   }
 
   const itensSelecionados = categorias.map(sortearItens)
@@ -244,6 +266,13 @@ function App() {
   const fimDeJogo = categoriasEscolhidas.length === sorteadas.length;
 
 
+  let existeErros = false;
+
+  if(fimDeJogo){
+    existeErros = verificaErros() > 0; 
+  }
+
+
   return (
     <div className="App">
       
@@ -264,6 +293,9 @@ function App() {
           ))}
         </div>
         
+        {existeErros ? (
+          <button className="verifica-erros">Verificar erros</button>
+        ) : (<button className="verifica-erros">Não existem erros</button>)}
         </div>
       ) : (
 
@@ -292,6 +324,8 @@ function App() {
             </button>
           ))}
         </div>
+
+      
         </div>
       )}
     </div>

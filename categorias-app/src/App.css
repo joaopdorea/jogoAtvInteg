@@ -123,3 +123,25 @@ h2 {
   color: #ffffff;
   cursor: default;
 }
+
+.verifica-erros{
+
+  margin: 5px auto;
+  padding: 10px 20px;
+  background-color: #4b3d59;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  font-size: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  overflow-wrap:break-word;
+  cursor: pointer;
+  
+
+}
