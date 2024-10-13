@@ -113,13 +113,13 @@ h2 {
 
 
 .resposta-btn.errada {
-  background-color: #a10808; 
+  background-color: #5a0202; 
   color: #ffffff;
   cursor: default;
 }
 
 .resposta-btn.certa {
-  background-color: #73c01b; 
+  background-color: #3d4434; 
   color: #ffffff;
   cursor: default;
 }
@@ -144,4 +144,20 @@ h2 {
   cursor: pointer;
   
 
+}
+
+
+#box-resposta{
+  margin: 0 22%;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  
 }

@@ -2,10 +2,19 @@ import logo from './logo.svg';
 import './App.css';
 
 import React, { useState, useEffect } from 'react';
+import OpenAI from "openai";
+
+
+
 
 function App() {
 
    // Lista com as 24 categorias disponíveis
+
+
+
+  
+   
    const categorias = [
     "reciclavel", "reutilizavel", "biodegradavel", "nao_reciclavel", "demora_muito_para_degradar",
     "poluente", "compostavel", "emite_gases_poluentes_ao_ser_produzido", "energia_intensiva_na_producao", "consome_muita_agua_na_producao",
@@ -162,6 +171,35 @@ function App() {
 
   ]
 
+   const [messages, setMessages] = useState([]);
+   const [loading, setLoading] = useState(false);
+   
+    const sendMessage = async (array) => {
+
+      const boxResposta = document.getElementById("box-resposta");
+
+      let promptCompleto = "Analise as seguintes associações a seguir e explique o porquê de estarem incorretas."
+
+      setLoading(true);
+
+      for(const objeto of array){
+        let associacao = objeto["nome"] + "&" + objeto["categoria"]+"   ";
+        promptCompleto = promptCompleto + associacao;
+      }
+
+      //promptCompleto = "Diga que isso é um teste."
+      
+      const response = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: promptCompleto }],
+        model: 'gpt-4o-mini'
+    });
+    
+      boxResposta.innerText = response.choices[0].message["content"];
+
+    }
+  
+ 
+
   // Estado para armazenar as 12 categorias sorteadas
   const [sorteadas, setSorteadas] = useState([]);
   const[tempoRestante, setTempoRestante] = useState(10);
@@ -216,6 +254,8 @@ function App() {
     
   }
 
+
+  
 
   const verificaErros = () => {
 
@@ -294,7 +334,12 @@ function App() {
         </div>
         
         {existeErros ? (
-          <button className="verifica-erros">Verificar erros</button>
+          <div>
+          <button className="verifica-erros" onClick={() => sendMessage(errosLista)}>Verificar erros</button>
+          <div id="box-resposta"> </div>
+          </div>
+          
+          
         ) : (<button className="verifica-erros">Não existem erros</button>)}
         </div>
       ) : (
